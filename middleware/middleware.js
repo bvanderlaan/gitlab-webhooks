@@ -34,9 +34,9 @@ function middleware (state, request, response, next) {
       })
   }
 
-  const eventName = request.headers['x-github-event']
-  const signature = request.headers['x-hub-signature']
-  const id = request.headers['x-github-delivery']
+  const eventName = request.headers['x-gitlab-event']
+  const signature = request.headers['x-gitlab-token']
+  const id = request.headers['x-request-id']
 
   debug(`${eventName} event received (id: ${id})`)
 

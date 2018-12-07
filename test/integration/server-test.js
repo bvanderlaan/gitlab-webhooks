@@ -70,9 +70,9 @@ test('POST / with push event payload', (t) => {
     .then(() => {
       return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
         headers: {
-          'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
-          'X-GitHub-Event': 'push',
-          'X-Hub-Signature': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+          'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
+          'X-Gitlab-Event': 'push',
+          'X-Gitlab-Token': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
         }
       })
     })
@@ -117,9 +117,9 @@ test('POST / with push event payload (request.body already parsed)', (t) => {
     .then(() => {
       return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
         headers: {
-          'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
-          'X-GitHub-Event': 'push',
-          'X-Hub-Signature': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+          'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
+          'X-Gitlab-Event': 'push',
+          'X-Gitlab-Token': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
         }
       })
     })
@@ -148,8 +148,8 @@ test('POST / with push event payload (no signature)', (t) => {
     .then(() => {
       return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
         headers: {
-          'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
-          'X-GitHub-Event': 'push'
+          'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
+          'X-Gitlab-Event': 'push'
         }
       })
     })
@@ -181,9 +181,9 @@ test('POST / with push event payload (invalid signature)', (t) => {
     .then(() => {
       return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
         headers: {
-          'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
-          'X-GitHub-Event': 'push',
-          'X-Hub-Signature': 'sha1=foo'
+          'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
+          'X-Gitlab-Event': 'push',
+          'X-Gitlab-Token': 'sha1=foo'
         }
       })
     })
@@ -217,9 +217,9 @@ test('POST / with hook error', (t) => {
     .then(() => {
       return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
         headers: {
-          'X-GitHub-Delivery': '123e4567-e89b-12d3-a456-426655440000',
-          'X-GitHub-Event': 'push',
-          'X-Hub-Signature': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+          'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
+          'X-Gitlab-Event': 'push',
+          'X-Gitlab-Token': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
         }
       })
     })

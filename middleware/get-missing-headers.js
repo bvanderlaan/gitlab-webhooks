@@ -1,9 +1,9 @@
 module.exports = getMissingHeaders
 
 const WEBHOOK_HEADERS = [
-  'x-github-event',
-  'x-hub-signature',
-  'x-github-delivery'
+  'x-gitlab-event',
+  'x-gitlab-token',
+  'x-request-id'
 ]
 
 // https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#events
