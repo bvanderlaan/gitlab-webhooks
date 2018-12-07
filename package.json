@@ -1,10 +1,10 @@
 {
-  "name": "@octokit/webhooks",
+  "name": "@vanderlaan/gitlab-webhooks",
   "version": "0.0.0-development",
   "publishConfig": {
     "access": "public"
   },
-  "description": "GitHub webhook events toolset for Node.js",
+  "description": "GitLab webhook events toolset for Node.js",
   "main": "index.js",
   "directories": {
     "lib": "lib",
@@ -34,9 +34,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/octokit/webhooks.js.git"
+    "url": "https://github.com/bvanderlaan/gitlab-webhooks.git"
   },
   "keywords": [],
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "contributors":[
+    "Brad van der Laan <brad.vanderlaan@gmail.com> (http://bradvanderlaan.ca)"
+  ],
   "license": "MIT"
 }

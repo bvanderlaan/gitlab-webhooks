@@ -3,7 +3,7 @@
 The `verify` method can be used as a standalone method.
 
 ```js
-const verify = require('@octokit/webhooks/verify')
+const verify = require('@vanderlaan/gitlab-webhooks/verify')
 const matchesSignature = verify(secret, eventData, signature)
 // true or false
 ```
@@ -18,7 +18,7 @@ const matchesSignature = verify(secret, eventData, signature)
     </td>
     <td>
       <strong>Required.</strong>
-      Secret as configured in GitHub Settings.
+      Secret as configured in GitLab Settings.
     </td>
   </tr>
   <tr>
@@ -32,7 +32,7 @@ const matchesSignature = verify(secret, eventData, signature)
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook request payload as received from GitHub
+      Webhook request payload as received from GitLab
     </td>
   </tr>
   <tr>
@@ -53,4 +53,4 @@ const matchesSignature = verify(secret, eventData, signature)
 
 Returns `true` or `false`. Throws error if `secret, ``eventPayload` or `signature` not passed.
 
-Back to [@octokit/webhooks README](..).
+Back to [@vanderlaan/gitlab-webhooks README](..).

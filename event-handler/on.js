@@ -9,7 +9,7 @@ function receiverOn (state, webhookNameOrNames, handler) {
   }
 
   if (webhookNames.indexOf(webhookNameOrNames) === -1) {
-    console.warn(`"${webhookNameOrNames}" is not a known webhook name (https://developer.github.com/v3/activity/events/types/)`)
+    console.warn(`"${webhookNameOrNames}" is not a known webhook name (https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#events)`)
   }
 
   if (!state.hooks[webhookNameOrNames]) {

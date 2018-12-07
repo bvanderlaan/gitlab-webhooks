@@ -1,26 +1,24 @@
-# @octokit/webhooks
+# @vanderlaan/gitlab-webhooks
 
-> GitHub webhook events toolset for Node.js
+> GitLab webhook events toolset for Node.js
 
-[![Build Status](https://travis-ci.org/octokit/webhooks.js.svg?branch=master)](https://travis-ci.org/octokit/webhooks.js)
-[![Coverage Status](https://coveralls.io/repos/octokit/webhooks.js/badge.svg?branch=master)](https://coveralls.io/github/octokit/webhooks.js?branch=master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/octokit/webhooks.js.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/bvanderlaan/gitlab-webhooks.svg?branch=master)](https://travis-ci.org/bvanderlaan/gitlab-webhook)
 
-[GitHub webhooks](https://developer.github.com/webhooks/) can be registered in multiple ways
+---
+**THIS IS A FORK OF [@octokit/webhooks](https://github.com/octokit/webhooks.js) WHICH HAS BEEN MODIFIED TO WORK WITH [GitLab](https://about.gitlab.com/)**
 
-1. In repository or organization settings on [github.com](https://github.com/).
-2. Using the REST API for [repositories](https://developer.github.com/v3/repos/hooks/) or [organizations](https://developer.github.com/v3/orgs/hooks/)
-3. By installing a [GitHub App](https://developer.github.com/apps/).
+**I'VE TRIED TO KEEP IT FEATURE AND API PARITY WITH [@octokit/webhooks](https://github.com/octokit/webhooks.js) SO IT CAN BE USED AS A DROP IN MODULE**
 
-`@octokit/webhooks` helps to handle webhook events received from GitHub.
+---
 
-Note that while setting a secret is optional on GitHub, it is required to be set in order to use `@octokit/webhooks`. Content Type must be set to `application/json`, `application/x-www-form-urlencoded` is not supported.
+
+`@vanderlaan/gitlab-webhooks` helps to handle webhook events received from GitLab.
 
 ## Example
 
 ```js
-// install with: npm install @octokit/webhooks
-const WebhooksApi = require('@octokit/webhooks')
+// install with: npm install @vanderlaan/gitlab-webhooks
+const WebhooksApi = require('@vanderlaan/gitlab-webhooks')
 const webhooks = new WebhooksApi({
   secret: 'mysecret'
 })
@@ -39,7 +37,7 @@ You can receive webhooks on your local machine or even browser using [EventSourc
 
 Go to [smee.io](https://smee.io/) and <kbd>Start a new channel</kbd>. Then copy the "Webhook Proxy URL" and
 
-1. enter it in the GitHub App’s "Webhook URL" input
+1. enter it in the GitLab Integration "Webhook URL" input
 2. pass it to the [EventSource](https://github.com/EventSource/eventsource) constructor, see below
 
 ```js
@@ -49,14 +47,16 @@ source.onmessage = (event) => {
   const webhookEvent = JSON.parse(event.data)
   webhooks.verifyAndReceive({
     id: webhookEvent['x-request-id'],
-    name: webhookEvent['x-github-event'],
-    signature: webhookEvent['x-hub-signature'],
+    name: webhookEvent['x-gitlab-event'],
+    signature: webhookEvent['x-gitlab-token'],
     payload: webhookEvent.body
   }).catch(console.error)
 }
 ```
 
 `EventSource` is a native browser API and can be polyfilled for browsers that don’t support it. In node, you can use the [`eventsource`](https://github.com/EventSource/eventsource) package: install with `npm install eventsource`, then `const EventSource = require('eventsource')`
+
+You can get GitLab to send test events, [See testing webhooks](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#testing-webhooks)
 
 ## API
 
@@ -89,7 +89,7 @@ new WebhooksApi({secret[, path]})
     </td>
     <td>
       <strong>Required.</strong>
-      Secret as configured in GitHub Settings.
+      Secret as configured in GitLab Integration Settings.
     </td>
   </tr>
   <tr>
@@ -138,7 +138,7 @@ webhooks.sign(eventPayload)
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook request payload as received from GitHub
+      Webhook request payload as received from GitLab
     </td>
   </tr>
 </table>
@@ -165,7 +165,7 @@ webhooks.verify(eventPayload, signature)
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook event request payload as received from GitHub.
+      Webhook event request payload as received from GitLab.
     </td>
   </tr>
   <tr>
@@ -219,7 +219,7 @@ webhooks.verifyAndReceive({id, name, payload, signature})
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. (Event names are set as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-GitHub-Event</code> header</a>
+      Name of the event. (Event names are set as <a href="https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#events"><code>X-Gitlab-Event</code> header</a>
       in the webhook event request.)
     </td>
   </tr>
@@ -234,7 +234,7 @@ webhooks.verifyAndReceive({id, name, payload, signature})
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook event request payload as received from GitHub.
+      Webhook event request payload as received from GitLab.
     </td>
   </tr>
   <tr>
@@ -262,7 +262,7 @@ Additionally, if verification fails, rejects return promise and emits an `error`
 Example
 
 ```js
-const WebhooksApi = require('@octokit/webhooks')
+const WebhooksApi = require('@vanderlaan/gitlab-webhooks')
 const webhooks = new WebhooksApi({
   secret: 'mysecret'
 })
@@ -270,10 +270,10 @@ eventHandler.on('error', handleSignatureVerificationError)
 
 // put this inside your webhooks route handler
 eventHandler.verifyAndReceive({
-  id: request.headers['x-github-delivery'],
-  name: request.headers['x-github-event'],
+  id: request.headers['x-request-id'],
+  name: request.headers['x-gitlab-event'],
   payload: request.body,
-  signature: request.headers['x-hub-signature']
+  signature: request.headers['x-gitlab-token']
 }).catch(handleErrorsFromHooks)
 ```
 
@@ -308,7 +308,7 @@ webhooks.receive({id, name, payload})
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. (Event names are set as <a href="https://developer.github.com/webhooks/#delivery-headers"><code>X-GitHub-Event</code> header</a>
+      Name of the event. (Event names are set as <a href="https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#events"><code>X-Gitlab-Event</code> header</a>
       in the webhook event request.)
     </td>
   </tr>
@@ -323,7 +323,7 @@ webhooks.receive({id, name, payload})
     </td>
     <td>
       <strong>Required.</strong>
-      Webhook event request payload as received from GitHub.
+      Webhook event request payload as received from GitLab.
     </td>
   </tr>
 </table>
@@ -351,7 +351,7 @@ webhooks.on(eventNames, handler)
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. One of <a href="#listofalleventnames">GitHub’s supported event names</a>.
+      Name of the event. One of <a href="#listofalleventnames">GitLab’s supported event names</a>.
     </td>
   </tr>
   <tr>
@@ -407,7 +407,7 @@ webhooks.removeListener(eventNames, handler)
     </td>
     <td>
       <strong>Required.</strong>
-      Name of the event. One of <a href="#listofalleventnames">GitHub’s supported event names</a>.
+      Name of the event. One of <a href="#listofalleventnames">GitLab’s supported event names</a>.
     </td>
   </tr>
   <tr>
@@ -498,7 +498,7 @@ Can also be used [standalone](middleware/).
 
 ### Webhook events
 
-See the full list of [event types with example payloads](https://developer.github.com/v3/activity/events/types/).
+See the full list of [event types with example payloads](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#events).
 
 If there are actions for a webhook, events are emitted for both, the webhook name as well as a combination of the webhook name and the action, e.g. `installation` and `installation.created`.
 
@@ -761,7 +761,7 @@ If there are actions for a webhook, events are emitted for both, the webhook nam
 
 ### Special events
 
-Besides the webhook events, there are [special events](#specialevents) emitted by `@octokit/webhooks`.
+Besides the webhook events, there are [special events](#specialevents) emitted by `@vanderlaan/gitlab-webhooks`.
 
 #### `*` wildcard event
 

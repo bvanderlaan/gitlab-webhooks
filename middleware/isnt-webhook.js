@@ -1,7 +1,7 @@
 module.exports = isntWebhook
 
 // Example webhook event request:
-// https://developer.github.com/webhooks/#example-delivery
+// https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#events
 function isntWebhook (request, options) {
   // GitHub sends all events as POST requests
   if (request.method !== 'POST') {
