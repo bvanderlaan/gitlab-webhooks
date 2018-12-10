@@ -1,11 +1,9 @@
 module.exports = verify
 
 const crypto = require('crypto')
-const Buffer = require('buffer').Buffer
+const { Buffer } = require('buffer')
 
 const timingSafeEqualPolyfill = require('buffer-equal-constant-time')
-
-const sign = require('../sign')
 
 function verify (secret, eventPayload, signature) {
   if (!secret || !eventPayload || !signature) {
@@ -13,7 +11,7 @@ function verify (secret, eventPayload, signature) {
   }
 
   const signatureBuffer = Buffer.from(signature)
-  const verificationBuffer = Buffer.from(sign(secret, eventPayload))
+  const verificationBuffer = Buffer.from(secret)
 
   if (signatureBuffer.length !== verificationBuffer.length) {
     return false

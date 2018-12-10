@@ -72,7 +72,7 @@ test('POST / with push event payload', (t) => {
         headers: {
           'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
           'X-Gitlab-Event': 'push',
-          'X-Gitlab-Token': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+          'X-Gitlab-Token': 'mysecret'
         }
       })
     })
@@ -119,7 +119,7 @@ test('POST / with push event payload (request.body already parsed)', (t) => {
         headers: {
           'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
           'X-Gitlab-Event': 'push',
-          'X-Gitlab-Token': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+          'X-Gitlab-Token': 'mysecret'
         }
       })
     })
@@ -219,7 +219,7 @@ test('POST / with hook error', (t) => {
         headers: {
           'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
           'X-Gitlab-Event': 'push',
-          'X-Gitlab-Token': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+          'X-Gitlab-Token': 'mysecret'
         }
       })
     })

@@ -9,7 +9,7 @@ const createMiddleware = require('../../middleware')
 const headers = {
   'x-request-id': '123e4567-e89b-12d3-a456-426655440000',
   'x-gitlab-event': 'push',
-  'x-gitlab-token': 'sha1=f4d795e69b5d03c139cc6ea991ad3e5762d13e2f'
+  'x-gitlab-token': 'mysecret'
 }
 
 test('Invalid payload', t => {

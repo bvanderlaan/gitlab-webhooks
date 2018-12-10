@@ -6,7 +6,7 @@ const eventPayload = {
   foo: 'bar'
 }
 const secret = 'mysecret'
-const signature = 'sha1=d03207e4b030cf234e3447bac4d93add4c6643d8'
+const signature = 'mysecret'
 
 test('verify() without options throws', (t) => {
   t.throws(verify)
