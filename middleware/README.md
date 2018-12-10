@@ -9,7 +9,7 @@ const middleware = new Middleware({
   path: '/gitlab-webhooks'
 })
 
-middleware.on('installation', asyncInstallationHook)
+middleware.on('push hook', asyncPushnHook)
 
 require('http').createServer(middleware).listen(3000)
 ```

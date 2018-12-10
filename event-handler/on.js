@@ -8,13 +8,19 @@ function receiverOn (state, webhookNameOrNames, handler) {
     return
   }
 
-  if (webhookNames.indexOf(webhookNameOrNames) === -1) {
-    console.warn(`"${webhookNameOrNames}" is not a known webhook name (https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#events)`)
+  let webhookName = webhookNameOrNames.toLowerCase()
+
+  if (webhookNames.indexOf(webhookName) === -1) {
+    if (webhookNames.indexOf(`${webhookName} hook`) !== -1) {
+      webhookName = `${webhookName} hook`
+    } else {
+      console.warn(`"${webhookNameOrNames}" is not a known webhook name (https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#events)`)
+    }
   }
 
-  if (!state.hooks[webhookNameOrNames]) {
-    state.hooks[webhookNameOrNames] = []
+  if (!state.hooks[webhookName]) {
+    state.hooks[webhookName] = []
   }
 
-  state.hooks[webhookNameOrNames].push(handler)
+  state.hooks[webhookName].push(handler)
 }

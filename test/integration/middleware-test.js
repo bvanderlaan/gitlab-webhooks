@@ -8,7 +8,7 @@ const createMiddleware = require('../../middleware')
 
 const headers = {
   'x-request-id': '123e4567-e89b-12d3-a456-426655440000',
-  'x-gitlab-event': 'push',
+  'x-gitlab-event': 'Push Hook',
   'x-gitlab-token': 'mysecret'
 }
 

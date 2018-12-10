@@ -2,7 +2,7 @@ const test = require('tap').test
 
 const EventHandler = require('../../event-handler')
 const pushEventPayload = require('../fixtures/push-payload')
-const installationCreatedPayload = require('../fixtures/installation-created-payload')
+const mergeRequestPayload = require('../fixtures/merge-request-payload')
 
 test('events', t => {
   t.plan(6)
@@ -27,43 +27,43 @@ test('events', t => {
     hooksCalled.push('hook4')
   }
   function hook5 () {
-    hooksCalled.push('installation')
+    hooksCalled.push('hook5')
   }
   function hook6 () {
-    hooksCalled.push('installation.created')
+    hooksCalled.push('Merge Request Hook')
   }
   function hook7 (event) {
     hooksCalled.push(`* (${event.name})`)
   }
 
-  eventHandler.on('push', hook1)
-  eventHandler.on('push', hook2)
-  eventHandler.on('push', hook3)
-  eventHandler.on(['push'], hook4)
-  eventHandler.on('installation', hook5)
-  eventHandler.on('installation.created', hook6)
+  eventHandler.on('push hook', hook1)
+  eventHandler.on('Push Hook', hook2)
+  eventHandler.on('push hook', hook3)
+  eventHandler.on(['push hook'], hook4)
+  eventHandler.on('push', hook5)
+  eventHandler.on('merge request hook', hook6)
   eventHandler.on('*', hook7)
 
-  eventHandler.removeListener('push', hook3)
-  eventHandler.removeListener(['push'], hook4)
+  eventHandler.removeListener('push hook', hook3)
+  eventHandler.removeListener(['push hook'], hook4)
   eventHandler.removeListener('unknown', () => {})
 
   eventHandler.receive({
     id: '123',
-    name: 'push',
+    name: 'Push Hook',
     payload: pushEventPayload
   })
 
     .then(() => {
       return eventHandler.receive({
         id: '456',
-        name: 'installation',
-        payload: installationCreatedPayload
+        name: 'Merge Request Hook',
+        payload: mergeRequestPayload
       })
     })
 
     .then(() => {
-      t.deepEqual(hooksCalled, ['hook2', '* (push)', 'hook1', 'installation.created', 'installation', '* (installation)'])
+      t.deepEqual(hooksCalled, ['hook2', 'hook5', '* (push hook)', 'hook1', 'Merge Request Hook', '* (merge request hook)'])
 
       eventHandler.on('error', (error) => {
         t.ok(error.event.payload)
@@ -71,13 +71,13 @@ test('events', t => {
         t.is(error.message, 'oops')
       })
 
-      eventHandler.on('push', () => {
+      eventHandler.on('push hook', () => {
         throw new Error('oops')
       })
 
       return eventHandler.receive({
         id: '123',
-        name: 'push',
+        name: 'Push Hook',
         payload: pushEventPayload
       })
     })
@@ -100,13 +100,13 @@ test('options.transform', t => {
     }
   })
 
-  eventHandler.on('push', (event) => {
+  eventHandler.on('push hook', (event) => {
     t.is(event, 'funky')
   })
 
   eventHandler.receive({
     id: '123',
-    name: 'push',
+    name: 'Push Hook',
     payload: pushEventPayload
   })
 })
@@ -118,14 +118,14 @@ test('async options.transform', t => {
     }
   })
 
-  eventHandler.on('push', (event) => {
+  eventHandler.on('push hook', (event) => {
     t.is(event, 'funky')
     t.end()
   })
 
   eventHandler.receive({
     id: '123',
-    name: 'push',
+    name: 'Push Hook',
     payload: pushEventPayload
   })
 })

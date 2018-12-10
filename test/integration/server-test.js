@@ -61,7 +61,7 @@ test('POST / with push event payload', (t) => {
   const api = new Webhooks({ secret: 'mysecret' })
   const server = http.createServer(api.middleware)
 
-  api.on('push', (event) => {
+  api.on('push hook', (event) => {
     t.is(event.id, '123e4567-e89b-12d3-a456-426655440000')
   })
 
@@ -71,7 +71,7 @@ test('POST / with push event payload', (t) => {
       return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
         headers: {
           'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
-          'X-Gitlab-Event': 'push',
+          'X-Gitlab-Event': 'Push Hook',
           'X-Gitlab-Token': 'mysecret'
         }
       })
@@ -108,7 +108,7 @@ test('POST / with push event payload (request.body already parsed)', (t) => {
     })
   })
 
-  api.on('push', (event) => {
+  api.on('push hook', (event) => {
     t.is(event.id, '123e4567-e89b-12d3-a456-426655440000')
   })
 
@@ -118,7 +118,7 @@ test('POST / with push event payload (request.body already parsed)', (t) => {
       return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
         headers: {
           'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
-          'X-Gitlab-Event': 'push',
+          'X-Gitlab-Event': 'Push Hook',
           'X-Gitlab-Token': 'mysecret'
         }
       })
@@ -149,7 +149,7 @@ test('POST / with push event payload (no signature)', (t) => {
       return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
         headers: {
           'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
-          'X-Gitlab-Event': 'push'
+          'X-Gitlab-Event': 'Push Hook'
         }
       })
     })
@@ -182,7 +182,7 @@ test('POST / with push event payload (invalid signature)', (t) => {
       return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
         headers: {
           'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
-          'X-Gitlab-Event': 'push',
+          'X-Gitlab-Event': 'Push Hook',
           'X-Gitlab-Token': 'sha1=foo'
         }
       })
@@ -208,7 +208,7 @@ test('POST / with hook error', (t) => {
   const api = new Webhooks({ secret: 'mysecret' })
   const server = http.createServer(api.middleware)
 
-  api.on('push', () => {
+  api.on('push hook', () => {
     throw new Error('Oops')
   })
 
@@ -218,7 +218,7 @@ test('POST / with hook error', (t) => {
       return axios.post(`http://localhost:${this.port}`, pushEventPayload, {
         headers: {
           'X-Request-Id': '123e4567-e89b-12d3-a456-426655440000',
-          'X-Gitlab-Event': 'push',
+          'X-Gitlab-Event': 'Push Hook',
           'X-Gitlab-Token': 'mysecret'
         }
       })

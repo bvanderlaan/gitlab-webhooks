@@ -22,9 +22,11 @@ function receiverHandle (state, event) {
     throw new Error('Event payload not passed')
   }
 
+  event.name = event.name.toLowerCase()
+
   // flatten arrays of event listeners and remove undefined values
   let hooks = [].concat(
-    state.hooks[`${event.name}.${event.payload.action}`],
+    state.hooks[`${event.name}.${event.payload.event_type}`],
     state.hooks[event.name],
     state.hooks['*']
   ).filter(Boolean)

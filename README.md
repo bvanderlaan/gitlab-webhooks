@@ -500,261 +500,77 @@ Can also be used [standalone](middleware/).
 
 See the full list of [event types with example payloads](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#events).
 
-If there are actions for a webhook, events are emitted for both, the webhook name as well as a combination of the webhook name and the action, e.g. `installation` and `installation.created`.
+The events can be registered case insensitively with the Event name (i.e. `Push Hook` or `push hook`). The _Hook_ postfix can be used optionally (i.e. `push` === `push hook`).
 
 <table>
   <thead>
     <tr>
       <th>Event</th>
-      <th>Actions</th>
+      <th>Alias</th>
     </tr>
   </thead>
   <tr>
     <th align=left valign=top>
-      <code>commit_comment</code>
+      <code>Push Hook</code>
     </th>
     <td>
-      <code>.created</code>
+      <code>push</code><br><code>push hook</code>
     </td>
   </tr>
   <tr>
     <th align=left valign=top>
-      <code>create</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>delete</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>deployment</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>deployment_status</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>fork</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>gollum</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>installation</code>
+      <code>Tag Push Hook</code>
     </th>
     <td>
-      <code>.created</code><br><code>.deleted</code>
+      <code>tag push</code><br><code>tag push hook</code>
     </td>
   </tr>
   <tr>
     <th align=left valign=top>
-      <code>installation_repositories</code>
+      <code>Issue Hook</code>
     </th>
     <td>
-      <code>.added</code><br><code>.removed</code>
+      <code>issue</code><br><code>Issue hook</code>
     </td>
   </tr>
   <tr>
     <th align=left valign=top>
-      <code>issue_comment</code>
+      <code>Note Hook</code>
     </th>
     <td>
-      <code>.created</code><br><code>.edited</code><br><code>.deleted</code>
+      <code>note</code><br><code>note hook</code>
     </td>
   </tr>
   <tr>
     <th align=left valign=top>
-      <code>issues</code>
+      <code>Merge Request Hook</code>
     </th>
     <td>
-      <code>.assigned</code><br><code>.unassigned</code><br><code>.labeled</code><br><code>.unlabeled</code><br><code>.opened</code><br><code>.edited</code><br><code>.milestoned</code><br><code>.demilestoned</code><br><code>.closed</code><br><code>.reopened</code>
+      <code>merge request</code><br><code>merge request hook</code>
     </td>
   </tr>
   <tr>
     <th align=left valign=top>
-      <code>label</code>
+      <code>Wiki Page Hook</code>
     </th>
     <td>
-      <code>.created</code><br><code>.edited</code><br><code>.deleted</code>
+      <code>wiki page</code><br><code>wiki page hook</code>
     </td>
   </tr>
   <tr>
     <th align=left valign=top>
-      <code>marketplace_purchase</code>
+      <code>Pipeline Hook</code>
     </th>
     <td>
-      <code>.purchased</code><br><code>.cancelled</code><br><code>.changed</code>
+      <code>pipeline</code><br><code>pipeline hook</code>
     </td>
   </tr>
   <tr>
     <th align=left valign=top>
-      <code>member</code>
+      <code>Build Hook</code>
     </th>
     <td>
-      <code>.added</code><br><code>.edited</code><br><code>.deleted</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>membership</code>
-    </th>
-    <td>
-      <code>.added</code><br><code>.removed</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>milestone</code>
-    </th>
-    <td>
-      <code>.created</code><br><code>.closed</code><br><code>.opened</code><br><code>.edited</code><br><code>.deleted</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>org_block</code>
-    </th>
-    <td>
-      <code>.blocked</code><br><code>.unblocked</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>organization</code>
-    </th>
-    <td>
-      <code>.member_added</code><br><code>.member_removed</code><br><code>.member_invited</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>page_build</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>ping</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>project</code>
-    </th>
-    <td>
-      <code>.created</code><br><code>.edited</code><br><code>.converted</code><br><code>.moved</code><br><code>.deleted</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>project_card</code>
-    </th>
-    <td>
-      <code>.created</code><br><code>.edited</code><br><code>.closed</code><br><code>.reopened</code><br><code>.deleted</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>project_column</code>
-    </th>
-    <td>
-      <code>.created</code><br><code>.edited</code><br><code>.moved</code><br><code>.deleted</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>public</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>pull_request</code>
-    </th>
-    <td>
-      <code>.assigned</code><br><code>.unassigned</code><br><code>.review_requested</code><br><code>.review_request_removed</code><br><code>.labeled</code><br><code>.unlabeled</code><br><code>.opened</code><br><code>.edited</code><br><code>.closed</code><br><code>.reopened</code><br><code>.synchronize</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>pull_request_review</code>
-    </th>
-    <td>
-      <code>.submitted</code><br><code>.edited</code><br><code>.dismissed</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>pull_request_review_comment</code>
-    </th>
-    <td>
-      <code>.created</code><br><code>.edited</code><br><code>.deleted</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>push</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>release</code>
-    </th>
-    <td>
-      <code>.published</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>repository</code>
-    </th>
-    <td>
-      <code>.created</code><br><code>.deleted</code><br><code>.archived</code><br><code>.unarchived</code><br><code>.publicized</code><br><code>.privatized</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>status</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>team</code>
-    </th>
-    <td>
-      <code>.created</code><br><code>.deleted</code><br><code>.edited</code><br><code>.added_to_repository</code><br><code>.removed_from_repository</code>
-    </td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>team_add</code>
-    </th>
-    <td></td>
-  </tr>
-  <tr>
-    <th align=left valign=top>
-      <code>watch</code>
-    </th>
-    <td>
-      <code>.started</code>
+      <code>build</code><br><code>build hook</code>
     </td>
   </tr>
 </table>

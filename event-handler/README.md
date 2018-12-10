@@ -12,7 +12,7 @@ const eventHandler = new EventHandler({
     return event
   }
 })
-eventHandler.on('installation', asyncInstallationHook)
+eventHandler.on('Push Hook', asyncPushHook)
 
 // put this inside your webhooks route handler
 eventHandler.receive({
