@@ -35,6 +35,12 @@ test('events', t => {
   function hook7 (event) {
     hooksCalled.push(`* (${event.name})`)
   }
+  function hook8 () {
+    hooksCalled.push('hook8')
+  }
+  function hook9 () {
+    hooksCalled.push('hook9')
+  }
 
   eventHandler.on('push hook', hook1)
   eventHandler.on('Push Hook', hook2)
@@ -43,6 +49,8 @@ test('events', t => {
   eventHandler.on('push', hook5)
   eventHandler.on('merge request hook', hook6)
   eventHandler.on('*', hook7)
+  eventHandler.on('merge request hook.open', hook8)
+  eventHandler.on('merge request.open', hook9)
 
   eventHandler.removeListener('push hook', hook3)
   eventHandler.removeListener(['push hook'], hook4)
@@ -63,7 +71,7 @@ test('events', t => {
     })
 
     .then(() => {
-      t.deepEqual(hooksCalled, ['hook2', 'hook5', '* (push hook)', 'hook1', 'Merge Request Hook', '* (merge request hook)'])
+      t.deepEqual(hooksCalled, ['hook2', 'hook5', '* (push hook)', 'hook1', 'hook8', 'hook9', 'Merge Request Hook', '* (merge request hook)'])
 
       eventHandler.on('error', (error) => {
         t.ok(error.event.payload)

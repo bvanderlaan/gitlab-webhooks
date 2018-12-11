@@ -24,9 +24,10 @@ function receiverHandle (state, event) {
 
   event.name = event.name.toLowerCase()
 
+  const action = (event.payload.object_attributes && event.payload.object_attributes.action) || 'create'
   // flatten arrays of event listeners and remove undefined values
   let hooks = [].concat(
-    state.hooks[`${event.name}.${event.payload.event_type}`],
+    state.hooks[`${event.name}.${action}`],
     state.hooks[event.name],
     state.hooks['*']
   ).filter(Boolean)

@@ -7,6 +7,10 @@
   "issue hook",
   "note hook",
   "merge request hook",
+  "merge request hook.open",
+  "merge request hook.update",
+  "merge request hook.merge",
+  "merge request hook.close",
   "wiki page hook",
   "pipeline hook",
   "build hook"

@@ -13,6 +13,8 @@ function receiverOn (state, webhookNameOrNames, handler) {
   if (webhookNames.indexOf(webhookName) === -1) {
     if (webhookNames.indexOf(`${webhookName} hook`) !== -1) {
       webhookName = `${webhookName} hook`
+    } else if (webhookNames.indexOf(webhookName.replace('.', ' hook.')) !== -1) {
+      webhookName = webhookName.replace('.', ' hook.')
     } else {
       console.warn(`"${webhookNameOrNames}" is not a known webhook name (https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#events)`)
     }
